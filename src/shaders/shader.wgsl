@@ -61,7 +61,7 @@ fn vs_main(
     //     in.position.z,
     //     1.0
     // );
-    let WH = textureDimensions(golTex);//vec2(11584, 11584);
+    let WH = vec2(11584, 11584);//textureDimensions(golTex);
     let texAspect = f32(WH.x)/(f32(WH.y));
 
     let int_scaler = dim.scale;//floor(dim.height/f32(WH.y));
@@ -93,7 +93,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     // let tex = golTex;
     // let texSamp = golTexSamp;
 
-    let WH = textureDimensions(golTex);//vec2(11584, 11584);//
+    let WH = vec2(11584, 11584);//textureDimensions(golTex);
     let int_scaler = dim.scale;//floor(dim.height/f32(WH.y));
     // let WH = vec2(u32(32), u32(1));
 
@@ -106,9 +106,9 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
     let pixel_coord = vec2(i32(in.tex_coords.x*f32(WH.x)), i32(in.tex_coords.y*f32(WH.y)));
     // let tex2Color = textureLoad(golTex, pixel_coord, 0);//textureSample(t_diffuse2, s_diffuse2, vec2(in.tex_coords.x, (in.tex_coords.y*240.0)%1.0));//moddedCoords);//pixelate(in.tex_coords, pixels*2.0));//512.0));
     // var color = textureSample(golTex, golTexSamp, in.tex_coords);//pixelate(tex, in.tex_coords, pixels));// + tex2Color;//256.0));
-    // let alive = getPixel(pixel_coord);
-    var pixColor = textureLoad(golTex, pixel_coord, 0);//textureSample(golTex, golTexSamp, in.tex_coords);//textureSample(golTex, golTexSamp, pixelate(golTex, in.tex_coords, pixels));// + tex2Color;//256.0));
-    // var pixColor = vec4(1.0, 1.0, 1.0 ,1.0);
+    let alive = getPixel(pixel_coord);
+    // var pixColor = textureLoad(golTex, pixel_coord, 0);//textureSample(golTex, golTexSamp, in.tex_coords);//textureSample(golTex, golTexSamp, pixelate(golTex, in.tex_coords, pixels));// + tex2Color;//256.0));
+    var pixColor = vec4(1.0, 1.0, 1.0 ,1.0);
     // if(alive == 1u){
     //     pixColor = vec4(0.0,0.0,0.0,1.0);
     // } else if(alive == 2u){
@@ -142,7 +142,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
 
     
 
-    var out = pixColor;// * f32(alive);
+    var out = pixColor * f32(alive);
 
     
     if(dim.dark == 1.0){
@@ -198,7 +198,7 @@ fn getPixel(pix_coord: vec2<i32>) -> u32 {
 fn coordToUVB(x: i32, y: i32) -> vec3<i32> {
   let temp1 = y * 11584 + x;
   var returnVal = vec3(0,0,0);
-  returnVal.z = 31 - temp1 % 32;
+  returnVal.z = temp1 % 32;
   let temp2 = temp1/32;
   returnVal.x = temp2 % 2048;
   returnVal.y = temp2 / 2048;

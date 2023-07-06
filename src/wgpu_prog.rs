@@ -367,6 +367,7 @@ impl WGPUComputeProg {
                 compute_pass.set_bind_group(1, &self.tex2.diffuse_bind_group, &[]);
             }
             // Dispatch the compute shader
+            // compute_pass.dispatch_workgroups(2048/16, 2048/16, 1);
             compute_pass.dispatch_workgroups(self.tex1.dimensions.0/16, self.tex1.dimensions.1/16, 1);
 
             // You can also set other compute pass options, such as memory barriers and synchronization

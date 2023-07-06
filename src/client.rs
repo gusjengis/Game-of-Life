@@ -150,7 +150,7 @@ impl Client {
 
     fn cursorToPixel(&self) -> Option<(u32, u32)> {
         let cursor = (self.cursor_pos.0 - self.xOff, self.cursor_pos.1 - self.yOff);
-        let dim = &self.wgpu_prog.shader_prog.tex2.dimensions;
+        let dim = &self.wgpu_prog.shader_prog.tex2.dimensions;//(11584, 11584);
         let windowDim = self.wgpu_config.size;
         let int_scale = self.scale as f32;//windowDim.height/dim.1;
         let xOff = ((windowDim.width as f32) - (dim.0 as f32)*(int_scale))/2.0; 
@@ -265,32 +265,32 @@ impl Client {
 
     pub fn input(&mut self, event: &WindowEvent) -> bool {
         match event {
-            WindowEvent::MouseInput { state: ElementState::Pressed, button: MouseButton::Right, .. } => {
-                let mut coords = self.cursorToPixel();
-                match coords {
-                    Some(value) => {
-                        if(!self.toggle){
-                            let pixel = coords.unwrap();
-                            self.writeToTex(pixel, &[0 as u8, 0 as u8, 0 as u8, 0 as u8]);
-                        }
-                        return true;
-                    }
-                    None => {return true;}
-                }
-            },
-            WindowEvent::MouseInput { state: ElementState::Pressed, button: MouseButton::Left, .. } => {
-                let mut coords = self.cursorToPixel();
-                match coords {
-                    Some(value) => {
-                        if(!self.toggle){
-                            let pixel = coords.unwrap();
-                            self.writeToTex(pixel, &[255 as u8, 255 as u8, 255 as u8, 255 as u8]);
-                        }
-                        return true;
-                    }
-                    None => {return true;}
-                }
-            },
+            // WindowEvent::MouseInput { state: ElementState::Pressed, button: MouseButton::Right, .. } => {
+            //     let mut coords = self.cursorToPixel();
+            //     match coords {
+            //         Some(value) => {
+            //             if(!self.toggle){
+            //                 let pixel = coords.unwrap();
+            //                 self.writeToTex(pixel, &[0 as u8, 0 as u8, 0 as u8, 0 as u8]);
+            //             }
+            //             return true;
+            //         }
+            //         None => {return true;}
+            //     }
+            // },h 
+            // WindowEvent::MouseInput { state: ElementState::Pressed, button: MouseButton::Left, .. } => {
+            //     let mut coords = self.cursorToPixel();
+            //     match coords {
+            //         Some(value) => {
+            //             if(!self.toggle){
+            //                 let pixel = coords.unwrap();
+            //                 self.writeToTex(pixel, &[255 as u8, 255 as u8, 255 as u8, 255 as u8]);
+            //             }
+            //             return true;
+            //         }
+            //         None => {return true;}
+            //     }
+            // },
             WindowEvent::MouseInput { state: ElementState::Pressed, button: MouseButton::Middle, .. } => {
                 self.middle = true;
                 return true;
@@ -306,7 +306,7 @@ impl Client {
                     }
                     _ => {}
                 }
-                if(self.scale < 1.0){ self.scale = 1.0; }
+                if(self.scale < 0.125){ self.scale = 0.125; }
                 if(self.temp > self.scale as f32 - 1.0){
                     self.temp = self.scale as f32 - 1.0;
                 }
