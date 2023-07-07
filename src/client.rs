@@ -68,7 +68,7 @@ impl Client {
         let yOff = 0;
         let scale = 8.0;
         let middle = false;
-        let dark = 1.0;
+        let dark = 0.0;
         let mut client = Client {
             canvas,
             wgpu_config,
