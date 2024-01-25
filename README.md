@@ -8,6 +8,6 @@ If you want to test this in the web yourself, build using ```wasm-pack build --t
 
 This was created for my own learning. I wanted to learn WebGPU/GPU Programming/GPU Compute, also wanted to test an idea I've had about updating each cell in Conway's Game of Life in parallel. 
 On my machine(RTX 3090Ti) it seems to run many times faster than the other web-based Game of Life implementations I've found, and it's completely unoptimized. 
-Currently in the compute shader I just count the number of neighbors and write a new color for each cell, there are way fancier, way faster algorithms for Game of Life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
+Currently in the compute shader I just count the number of neighbors and write a new color for each cell, there are way fancier, faster algorithms for Game of Life (https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).
 
 Currenly running Highlife(B36/S23) instead of traditional GOL(B3/S23). Rules are in gol_shader1.wgsl, feel free to change them.
